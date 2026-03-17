@@ -1,0 +1,17 @@
+customer_nodepools:
+
+  cdsservice:
+    name: cdsservice
+    node_count: 1
+    min_nodes: 1
+    max_nodes: 2
+    size: "Standard_D4ads_v6"
+    disk_type: "Ephemeral"
+
+  gdpsvcd4:
+    name: gdpsvcd4
+    size: "Standard_D8ads_v5"
+    disk_type: "Ephemeral"
+    node_count: 3
+    min_nodes: 0
+    max_nodes: 12
