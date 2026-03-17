@@ -1,0 +1,25 @@
+name: Nodepool Excel Report
+
+on:
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          pip install pandas pyyaml openpyxl
+
+      - name: Run Python Script
+        run: python generate_excel.py
+
+      - name: Upload Excel Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: nodepool-report
+          path: nodepool_report.xlsx
