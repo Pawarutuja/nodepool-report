@@ -1,4 +1,4 @@
-name: Nodepool Excel Report
+name: Nodepool Table Output
 
 on:
   workflow_dispatch:
@@ -9,17 +9,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: |
-          pip install pandas pyyaml openpyxl
+        run: pip install pyyaml
 
       - name: Run Python Script
-        run: python generate_excel.py
-
-      - name: Upload Excel Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: nodepool-report
-          path: nodepool_report.xlsx
+        run: python generate_table.py

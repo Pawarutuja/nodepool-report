@@ -1,24 +1,24 @@
 import yaml
-import pandas as pd
+import os
 
 with open("nodepools.yaml") as f:
     data = yaml.safe_load(f)
 
 nodepools = data["customer_nodepools"]
 
-rows = []
+# Create markdown table
+table = "| Name | Size | Node Count | Min | Max | Disk |\n"
+table += "|------|------|------------|-----|-----|------|\n"
 
 for key, val in nodepools.items():
-    rows.append({
-        "Name": val.get("name"),
-        "Size": val.get("size"),
-        "Node Count": val.get("node_count"),
-        "Min Nodes": val.get("min_nodes"),
-        "Max Nodes": val.get("max_nodes"),
-        "Disk Type": val.get("disk_type")
-    })
+    table += f"| {val.get('name')} | {val.get('size')} | {val.get('node_count')} | {val.get('min_nodes')} | {val.get('max_nodes')} | {val.get('disk_type')} |\n"
 
-df = pd.DataFrame(rows)
-df.to_excel("nodepool_report.xlsx", index=False)
+# Print in logs
+print(table)
 
-print("Excel file created successfully!")
+# Write to GitHub Summary
+summary_file = os.environ.get("GITHUB_STEP_SUMMARY")
+
+with open(summary_file, "a") as f:
+    f.write("## Nodepool Report\n\n")
+    f.write(table)
